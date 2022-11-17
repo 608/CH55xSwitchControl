@@ -1,6 +1,7 @@
 # CH55xSwitchControl
 
-中国製マイコンのCH552を使用してNintendo Switchを自動化する為のArduino IDE用ライブラリです。
+安価で入手できる中国製マイコンのCH552を使用してNintendo Switchを自動化する為のArduino IDE用ライブラリです。
+
 <img src="https://user-images.githubusercontent.com/21293572/202479479-fff6e791-59a1-463b-bc7a-f67b4cd12cca.jpg" width="50%">
 
 ## 必要なもの
@@ -17,6 +18,7 @@
 **ライブラリーのインストール**  
 Arduinoのライブラリのあるディレクトリ(/Users/{username}/Documents/Arduino/libraries/ など)に、このレポジトリをcloneする/ダウンロードして展開する。
 
+
 **ch55xduinoのインストール**  
 Arduino IDEでCH552マイコンを使用する為に必要となる。
 1. ファイル→環境設定を開き、「追加のボードマネージャのURL」に以下のURLを追加する。
@@ -27,6 +29,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 2. ツール→ボード→ボードマネージャを開き、検索窓で「ch」と入力して出てくる「ch55xduino」を選んでインストールする。
 
 3. ツール→ボードから、CH552を選択する。
+
 
 **入力**  
 ライブラリを使いたいファイルの先頭に以下のように記載してください。
@@ -154,7 +157,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 - 左スティックを操作するコマンド
 
-  - `tiltLeftStick(uint8_t lx, uint8_t ly, int tilt_time, uint16_t button);`
+  - `tiltLeftStick(uint8_t lx, uint8_t ly, uint32_t tilt_time, uint16_t button);`
 
     - lx: 左スティックの x 軸
     - ly: 左スティックの y 軸
@@ -171,7 +174,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 - 右スティックを操作するコマンド
 
-  - `tiltRightStick(uint8_t rx, uint8_t ry, int tilt_time, uint16_t button);`
+  - `tiltRightStick(uint8_t rx, uint8_t ry, uint32_t tilt_time, uint16_t button);`
 
     - rx: 右スティックの x 軸
     - ry: 右スティックの y 軸
@@ -188,7 +191,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 - 左右のスティックを同時に操作するコマンド
 
-  - `tiltLeftAndRightStick(uint8_t lx, uint8_t ly, uint8_t rx, uint8_t ry, int tilt_time, uint16_t button);`
+  - `tiltLeftAndRightStick(uint8_t lx, uint8_t ly, uint8_t rx, uint8_t ry, uint32_t tilt_time, uint16_t button);`
 
     - lx: 左スティックの x 軸
     - ly: 左スティックの y 軸
@@ -211,3 +214,6 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
   STICK_MIN
   STICK_NEUTRAL
   STICK_MAX
+
+## 参考
+[NintendoSwitchControlLibrary](https://github.com/lefmarna/NintendoSwitchControlLibrary)
