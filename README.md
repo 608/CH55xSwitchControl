@@ -1,6 +1,7 @@
 # CH55xSwitchControl
 
 中国製マイコンのCH552を使用してNintendo Switchを自動化する為のArduino IDE用ライブラリです。
+<img src="https://user-images.githubusercontent.com/21293572/202479479-fff6e791-59a1-463b-bc7a-f67b4cd12cca.jpg" width="50%">
 
 ## 必要なもの
 **ハードウェア**
