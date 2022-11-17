@@ -15,7 +15,7 @@
 
 ## 使い方
 ### 環境設定
-**ライブラリーのインストール**  
+**ライブラリのインストール**  
 Arduinoのライブラリのあるディレクトリ(/Users/{username}/Documents/Arduino/libraries/ など)に、このレポジトリをcloneする/ダウンロードして展開する。
 
 
