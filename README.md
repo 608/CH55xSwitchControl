@@ -16,7 +16,7 @@
 ## 使い方
 ### 環境設定
 **ライブラリのインストール**  
-Arduinoのライブラリのあるディレクトリ(/Users/{username}/Documents/Arduino/libraries/ など)に、このレポジトリをcloneする/ダウンロードして展開してください。
+Arduino IDEのライブラリマネージャーの検索窓で本ライブラリ名「CH55xSwitchControl」を検索し、インストールします。
 
 
 **ch55xduinoのインストール**  
@@ -26,7 +26,7 @@ Arduino IDEでCH552マイコンを使用する為に必要となります。
 https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json
 ~~~
 
-2. ツール→ボード→ボードマネージャを開き、検索窓で「ch」と入力して出てくる「ch55xduino」を選んでインストールします。
+2. ツール→ボード→ボードマネージャを開き、検索窓で「ch55xduino」を検索し、インストールします。
 
 3. ツール→ボードから、CH552を選択します。
 
