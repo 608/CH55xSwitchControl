@@ -31,30 +31,30 @@ bool hasDockUpdateMenu(void) {
 void changeDate() {
   // ホーム画面 > 設定
   pushButton(BUTTON_HOME, 500);
-  pushHat(HAT_DOWN, 25);
+  pushHatButton(HAT_DOWN, 25);
   if (hasNintendoSwitchOnlineMenu()) {
-    pushHatLoop(HAT_RIGHT, 25, 5);
+    pushHatButtonLoop(HAT_RIGHT, 25, 5);
   } else {
-    pushHatLoop(HAT_RIGHT, 25, 4);
+    pushHatButtonLoop(HAT_RIGHT, 25, 4);
   }
   pushButton(BUTTON_A, 100);
 
   // 設定 > 本体 > 日付と時刻
-  holdHat(HAT_DOWN, 2000);
-  pushHat(HAT_RIGHT, 25);
+  pushHatButtonContinuous(HAT_DOWN, 2000);
+  pushHatButton(HAT_RIGHT, 25);
   if (hasDockUpdateMenu()) {
-    pushHatLoop(HAT_DOWN, 25, 9);
+    pushHatButtonLoop(HAT_DOWN, 25, 9);
   } else {
-    pushHatLoop(HAT_DOWN, 25, 4);
+    pushHatButtonLoop(HAT_DOWN, 25, 4);
   }
   pushButton(BUTTON_A, 200);
 
   // 日付と時刻 > 現在の日付と時刻
-  pushHatLoop(HAT_DOWN, 25, 2);
+  pushHatButtonLoop(HAT_DOWN, 25, 2);
   pushButton(BUTTON_A, 500);
-  pushHatLoop(HAT_RIGHT, 25, 2);
-  pushHat(HAT_UP, 25);
-  pushHatLoop(HAT_RIGHT, 25, 3);
+  pushHatButtonLoop(HAT_RIGHT, 25, 2);
+  pushHatButton(HAT_UP, 25);
+  pushHatButtonLoop(HAT_RIGHT, 25, 3);
   pushButton(BUTTON_A, 50);
 
   // ホーム画面 > ゲーム画面

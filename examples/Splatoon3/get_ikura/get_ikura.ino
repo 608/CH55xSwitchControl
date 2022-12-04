@@ -29,16 +29,16 @@ void selectController() {
 
 // ミッションを開始する
 void startMission() {
-  holdButton(BUTTON_ZL, START_LOADING_TIME_MS);
+  pushButtonContinuous(BUTTON_ZL, START_LOADING_TIME_MS);
   pushButton(BUTTON_A, 2000);
-  tiltLeftStick(STICK_NEUTRAL, STICK_MIN, 2000, BUTTON_NONE);
+  tiltJoystick(0, -100, 0, 0, 2000);
   pushButton(BUTTON_A, 3000);
 }
 
 // インクを発射する
 void shootInk() {
-  tiltRightStick(STICK_NEUTRAL, STICK_MIN, 50, BUTTON_NONE);
-  holdButton(BUTTON_ZR, 2000);
+  tiltJoystick(0, 0, 0, -100, 50);
+  pushButtonContinuous(BUTTON_ZR, 2000);
 }
 
 void setup() {

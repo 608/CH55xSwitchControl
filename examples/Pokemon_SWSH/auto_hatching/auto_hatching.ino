@@ -15,8 +15,8 @@
 
 // 空飛ぶタクシーでハシノマはらっぱに移動
 void moveToInitialPlayerPosition() {
-  pushButton(BUTTON_X, 1000);
-  holdHat(HAT_UP_LEFT, 1000);
+  pushButton(BUTTON_X, 1000);  
+  pushHatButtonContinuous(HAT_UP_LEFT, 1000);
   pushButton(BUTTON_A, 2500);
   pushButtonLoop(BUTTON_A, 1500, 2);
   delay(2000);
@@ -26,8 +26,8 @@ void moveToInitialPlayerPosition() {
 void getEggFromBreeder() {
   // 初期位置(ハシノマはらっぱ)から育て屋さんのところまで移動
   pushButton(BUTTON_PLUS, 1000);
-  tiltRightStick(STICK_MAX, STICK_NEUTRAL, 2000, BUTTON_NONE);
-  tiltLeftStick(166, STICK_MIN, 800, BUTTON_NONE);
+  tiltJoystick(0, 0, 100, 0, 2000);
+  tiltJoystick(30, -100, 100, 0, 800);
   pushButton(BUTTON_PLUS, 1000);
 
   // 育て屋さんから卵をもらう
@@ -39,9 +39,9 @@ void getEggFromBreeder() {
 void runAround(int run_time_sec) {
   // delayの秒数がintの最大値を越えないように30秒ごとに実行する
   for (int i = 0; i < run_time_sec / 30; i++) {
-    tiltLeftAndRightStick(STICK_MAX, STICK_MAX, STICK_MIN, STICK_MIN, 30000, BUTTON_NONE);
+    tiltJoystick(100, 100, -100, -100, 30000);
   }
-  tiltLeftAndRightStick(STICK_MAX, STICK_MAX, STICK_MIN, STICK_MIN, (run_time_sec % 30) * 1000, BUTTON_NONE);
+  tiltJoystick(100, 100, -100, -100, (run_time_sec % 30) * 1000);
 }
 
 // 卵が孵化するのを待つ
@@ -54,22 +54,22 @@ void waitEggHatching() {
 void sendHatchedPoemonToBox(int box_line) {
   // ボックスを開く
   pushButton(BUTTON_X, 1000);
-  holdHat(HAT_UP_LEFT, 1000);
-  pushHat(HAT_RIGHT, 500);
+  pushHatButtonContinuous(HAT_UP_LEFT, 1000);
+  pushHatButton(HAT_RIGHT, 500);
   pushButton(BUTTON_A, 2000);
   pushButton(BUTTON_R, 2000);
 
   // 手持ちの孵化したポケモンを範囲選択
-  pushHat(HAT_LEFT, 500);
-  pushHat(HAT_DOWN, 500);
+  pushHatButton(HAT_LEFT, 500);
+  pushHatButton(HAT_DOWN, 500);
   pushButtonLoop(BUTTON_Y, 500, 2);
   pushButton(BUTTON_A, 500);
-  holdHat(HAT_DOWN, 2000);
+  pushHatButtonContinuous(HAT_DOWN, 2000);
   pushButton(BUTTON_A, 500);
 
   // ボックスに移動させる
-  pushHatLoop(HAT_RIGHT, 500, box_line + 1);
-  pushHat(HAT_UP, 500);
+  pushHatButtonLoop(HAT_RIGHT, 500, box_line + 1);
+  pushHatButton(HAT_UP, 500);
   pushButton(BUTTON_A, 500);
 
   // ボックスを閉じる
@@ -80,14 +80,14 @@ void sendHatchedPoemonToBox(int box_line) {
 void moveToNextBox() {
   // ボックスを開く
   pushButton(BUTTON_X, 1000);
-  holdHat(HAT_UP_LEFT, 1000);
-  pushHat(HAT_RIGHT, 500);
+  pushHatButtonContinuous(HAT_UP_LEFT, 1000);
+  pushHatButton(HAT_RIGHT, 500);
   pushButton(BUTTON_A, 2000);
   pushButton(BUTTON_R, 2000);
 
   // ボックスを移動
-  pushHat(HAT_UP, 500);
-  pushHat(HAT_RIGHT, 500);
+  pushHatButton(HAT_UP, 500);
+  pushHatButton(HAT_RIGHT, 500);
 
   // ボックスを閉じる
   pushButtonLoop(BUTTON_B, 1500, 3);
