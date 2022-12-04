@@ -51,6 +51,7 @@ void releaseHatButton(void);
 void setStickTiltRatio(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per);
 void pushButton(uint16_t button, uint32_t delay_time_msec);
 void pushButtonLoop(uint16_t button, uint32_t delay_time_msec, uint16_t loop_num);
+void pushButtonContinuous(uint16_t button, uint32_t pushing_time_msec);
 void pushHatButton(uint8_t hat, uint32_t delay_time_msec);
 void pushHatButtonLoop(uint8_t hat, uint32_t delay_time_msec, uint16_t loop_num);
 void pushHatButtonContinuous(uint8_t hat, uint32_t pushing_time_msec);

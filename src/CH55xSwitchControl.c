@@ -105,9 +105,22 @@ void pushButtonLoop(uint16_t button, uint32_t delay_time_msec, uint16_t loop_num
 }
 
 /**
+ * @brief Switchコントローラーのボタンを指定時間の間押し続ける
+ * 
+ * @param button 押すボタン
+ * @param pushing_time_msec ボタンを押す時間の長さ
+ */
+void pushButtonContinuous(uint16_t button, uint32_t pushing_time_msec) {
+  pressButton(button);
+  delay(pushing_time_msec);
+  releaseButton(button);
+  delay(BUTTON_PUSHING_MSEC);
+}
+
+/**
  * @brief Switchコントローラーの矢印ボタンを押す
  * 
- * @param button 押す矢印ボタン
+ * @param hat 押す矢印ボタン
  * @param delay_after_pushing_msec ボタンを押し終えた後の待ち時間
  */
 void pushHatButton(uint8_t hat, uint32_t delay_time_msec) {
@@ -121,7 +134,7 @@ void pushHatButton(uint8_t hat, uint32_t delay_time_msec) {
 /**
  * @brief Switchコントローラーの矢印ボタンを複数回押す
  * 
- * @param button 押す矢印ボタン
+ * @param hat 押す矢印ボタン
  * @param delay_after_pushing_msec ボタンを押し終えた後の待ち時間 
  * @param loop_num ボタンを押す回数
  */
@@ -138,7 +151,7 @@ void pushHatButtonLoop(uint8_t hat, uint32_t delay_time_msec, uint16_t loop_num)
 /**
  * @brief Switchコントローラーの矢印ボタンを指定時間の間押し続ける
  * 
- * @param button 押す矢印ボタン
+ * @param hat 押す矢印ボタン
  * @param pushing_time_msec ボタンを押す時間の長さ
  */
 void pushHatButtonContinuous(uint8_t hat, uint32_t pushing_time_msec) {
