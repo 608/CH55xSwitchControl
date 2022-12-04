@@ -30,11 +30,7 @@
 #define HAT_LEFT 0x06
 #define HAT_UP_LEFT 0x07
 #define HAT_LEFT_UP 0x07
-#define HAT_NEUTRAL 0x08
-
-#define STICK_MIN 0x00
-#define STICK_NEUTRAL 0x80
-#define STICK_MAX 0xFF
+#define HAT_CENTER 0x08
 
 typedef struct {
   uint16_t Button;
@@ -52,14 +48,10 @@ void pressButton(uint16_t button);
 void releaseButton(uint16_t button);
 void pressHatButton(uint8_t hat);
 void releaseHatButton(void);
-void moveLeftStick(uint8_t lx, uint8_t ly);
-void moveRightStick(uint8_t rx, uint8_t ry);
-void pushButton(uint16_t button, uint32_t delay_time);
-void pushButtonLoop(uint16_t button, uint32_t delay_time, uint16_t loop_count);
-void holdButton(uint16_t button, uint32_t hold_time);
-void pushHat(uint8_t hat, uint32_t delay_time);
-void pushHatLoop(uint8_t hat, uint32_t delay_time, uint16_t loop_count);
-void holdHat(uint8_t hat, uint32_t hold_time);
-void tiltLeftStick(uint8_t lx, uint8_t ly, uint32_t tilt_time, uint16_t button);
-void tiltRightStick(uint8_t lx, uint8_t ly, uint32_t tilt_time, uint16_t button);
-void tiltLeftAndRightStick(uint8_t lx, uint8_t ly, uint8_t rx, uint8_t ry, uint32_t tilt_time, uint16_t button);
+void setStickTiltRatio(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per);
+void pushButton(uint16_t button, uint32_t delay_time_msec);
+void pushButtonLoop(uint16_t button, uint32_t delay_time_msec, uint16_t loop_num);
+void pushHatButton(uint8_t hat, uint32_t delay_time_msec);
+void pushHatButtonLoop(uint8_t hat, uint32_t delay_time_msec, uint16_t loop_num);
+void pushHatButtonContinuous(uint8_t hat, uint32_t pushing_time_msec);
+void tiltJoystick(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per, uint32_t tilt_time_msec);

@@ -12,12 +12,10 @@ uint8_t Ep1Buffer[];
 
 __xdata USB_JoystickReport_Input_t controller_report;
 
-__xdata const uint16_t INPUT_TIME = 100;
-
-__xdata const uint16_t INPUT_TIME_TWICE = 200;
+__xdata const uint16_t BUTTON_PUSHING_MSEC = 100;
 
 /**
- * USBコントローラーの初期化
+ * @brief USBコントローラーの初期化
  */
 void USBInit(void) {
   USBDeviceCfg();
@@ -28,15 +26,15 @@ void USBInit(void) {
   UEP2_T_LEN = 0;
 
   memset(&controller_report, 0, sizeof(USB_JoystickReport_Input_t));
-  controller_report.LX = STICK_NEUTRAL;
-  controller_report.LY = STICK_NEUTRAL;
-  controller_report.RX = STICK_NEUTRAL;
-  controller_report.RY = STICK_NEUTRAL;
-  controller_report.Hat = HAT_NEUTRAL;
+  controller_report.LX = 128;
+  controller_report.LY = 128;
+  controller_report.RX = 128;
+  controller_report.RY = 128;
+  controller_report.Hat = 8;
 }
 
 /**
- * コントローラーの状態をSwitchに送信する
+ * @brief コントローラーの状態をSwitchに送信する
  */
 void sendReport(void) {
   uint8_t *p = (uint8_t *)&controller_report;
@@ -47,260 +45,121 @@ void sendReport(void) {
   UEP1_CTRL = UEP1_CTRL & ~MASK_UEP_T_RES | UEP_T_RES_ACK;
 }
 
-/**
- * ボタンを押す
- *
- * @param uint16_t button     押すボタン
- */
 void pressButton(uint16_t button) {
   controller_report.Button |= button;
+  sendReport();
 }
 
-/**
- * ボタンを離す
- */
 void releaseButton(uint16_t button) {
   controller_report.Button &= ~button;
+  sendReport();
 }
 
-/**
- * 十字キーを押す
- *
- * @param uint8_t hat 押す十字キーのボタン
- */
 void pressHatButton(uint8_t hat) {
   controller_report.Hat = hat;
+  sendReport();
 }
 
-/**
- * 十字キーを離す
- */
 void releaseHatButton(void) {
-  controller_report.Hat = HAT_NEUTRAL;
+  controller_report.Hat = 8;
+  sendReport();
+}
+
+void setStickTiltRatio(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per) {
+  controller_report.LX = (uint8_t)(lx_per * 0xFF / 200 + 0x80);
+  controller_report.LY = (uint8_t)(ly_per * 0xFF / 200 + 0x80);
+  controller_report.RX = (uint8_t)(rx_per * 0xFF / 200 + 0x80);
+  controller_report.RY = (uint8_t)(ry_per * 0xFF / 200 + 0x80);
+  sendReport();
 }
 
 /**
- * 左スティックを傾ける
- *
- * @param uint8_t lx 左スティックのX軸
- * @param uint8_t ly 左スティックのY軸
+ * @brief Switchコントローラーのボタンを押す
+ * 
+ * @param button 押すボタン
+ * @param delay_after_pushing_msec ボタンを押し終えた後の待ち時間
  */
-void moveLeftStick(uint8_t lx, uint8_t ly) {
-  controller_report.LX = lx;
-  controller_report.LY = ly;
-}
-
-/**
- * 右スティックを傾ける
- *
- * @param uint8_t rx 右スティックのX軸
- * @param uint8_t ry 右スティックのY軸
- */
-void moveRightStick(uint8_t rx, uint8_t ry) {
-  controller_report.RX = rx;
-  controller_report.RY = ry;
-}
-
-/**
- * ボタンを押す
- *
- * @param uint16_t button     押すボタン
- * @param uint32_t delay_time ボタンを押した後の待ち時間（1秒 = 1000）
- */
-void pushButton(uint16_t button, uint32_t delay_time) {
+void pushButton(uint16_t button, uint32_t delay_time_msec) {
   pressButton(button);
-  sendReport();
-  delay(INPUT_TIME);
+  delay(BUTTON_PUSHING_MSEC);
   releaseButton(button);
-  sendReport();
-  delay(delay_time);
-  delay(INPUT_TIME);
+  delay(delay_time_msec);
+  delay(BUTTON_PUSHING_MSEC);
 }
 
 /**
- * ボタンを複数回押す
- *
- * @param uint16_t button     押すボタン
- * @param uint32_t delay_time ボタンを押した後の待ち時間（1秒 = 1000）
- * @param uint16_t loop_count ボタンを押す回数
+ * @brief Switchコントローラーのボタンを複数回押す
+ * 
+ * @param button 押すボタン
+ * @param delay_after_pushing_msec ボタンを押し終えた後の待ち時間 
+ * @param loop_num ボタンを押す回数
  */
-void pushButtonLoop(uint16_t button, uint32_t delay_time, uint16_t loop_count) {
-  for (uint32_t i = 0; i < loop_count; i++) {
+void pushButtonLoop(uint16_t button, uint32_t delay_time_msec, uint16_t loop_num) {
+  for (uint32_t i = 0; i < loop_num; i++) {
     pressButton(button);
-    sendReport();
-    delay(INPUT_TIME);
+    delay(BUTTON_PUSHING_MSEC);
     releaseButton(button);
-    sendReport();
-    delay(delay_time);
+    delay(delay_time_msec);
   }
-  delay(INPUT_TIME);
+  delay(BUTTON_PUSHING_MSEC);
 }
 
 /**
- * ボタンを指定の時間押し続ける
- *
- * @param uint16_t button    押し続けるボタン
- * @param uint32_t hold_time ボタンを押す時間の長さ（1秒 = 1000）
+ * @brief Switchコントローラーの矢印ボタンを押す
+ * 
+ * @param button 押す矢印ボタン
+ * @param delay_after_pushing_msec ボタンを押し終えた後の待ち時間
  */
-void holdButton(uint16_t button, uint32_t hold_time) {
-  pressButton(button);
-  sendReport();
-  delay(hold_time);
-  releaseButton(button);
-  sendReport();
-  delay(INPUT_TIME);
-}
-
-/**
- * 十字キーを押す
- *
- * @param uint8_t  hat        押す十字キーのボタン
- * @param uint32_t delay_time ボタンを押した後の待ち時間（1秒 = 1000）
- */
-void pushHat(uint8_t hat, uint32_t delay_time) {
+void pushHatButton(uint8_t hat, uint32_t delay_time_msec) {
   pressHatButton(hat);
-  sendReport();
-  delay(100);
+  delay(BUTTON_PUSHING_MSEC);
   releaseHatButton();
-  sendReport();
-  delay(delay_time);
-  delay(INPUT_TIME);
+  delay(delay_time_msec);
+  delay(BUTTON_PUSHING_MSEC);
 }
 
 /**
- * 十字キーを複数回押す
- *
- * @param uint8_t  hat        押す十字キーのボタン
- * @param uint32_t delay_time ボタンを押した後の待ち時間（1秒 = 1000）
- * @param uint16_t loop_count ボタンを押す回数
+ * @brief Switchコントローラーの矢印ボタンを複数回押す
+ * 
+ * @param button 押す矢印ボタン
+ * @param delay_after_pushing_msec ボタンを押し終えた後の待ち時間 
+ * @param loop_num ボタンを押す回数
  */
-void pushHatLoop(uint8_t hat, uint32_t delay_time, uint16_t loop_count) {
-  for (uint32_t i = 0; i < loop_count; i++) {
+void pushHatButtonLoop(uint8_t hat, uint32_t delay_time_msec, uint16_t loop_num) {
+  for (uint32_t i = 0; i < loop_num; i++) {
     pressHatButton(hat);
-    sendReport();
-    delay(INPUT_TIME);
+    delay(BUTTON_PUSHING_MSEC);
     releaseHatButton();
-    sendReport();
-    delay(delay_time);
+    delay(delay_time_msec);
   }
-  delay(INPUT_TIME);
+  delay(BUTTON_PUSHING_MSEC);
 }
 
 /**
- * 十字キーを指定の時間押し続ける
- *
- * @param uint8_t  hat       押し続ける十字キーのボタン
- * @param uint32_t hold_time ボタンを押す時間の長さ（1秒 = 1000）
+ * @brief Switchコントローラーの矢印ボタンを指定時間の間押し続ける
+ * 
+ * @param button 押す矢印ボタン
+ * @param pushing_time_msec ボタンを押す時間の長さ
  */
-void holdHat(uint8_t hat, uint32_t hold_time) {
+void pushHatButtonContinuous(uint8_t hat, uint32_t pushing_time_msec) {
   pressHatButton(hat);
-  sendReport();
-  delay(hold_time);
+  delay(pushing_time_msec);
   releaseHatButton();
-  sendReport();
-  delay(INPUT_TIME);
+  delay(BUTTON_PUSHING_MSEC);
 }
 
 /**
- * 左スティックを指定の時間傾け続ける
- * 128を基準とし、0~255の値を指定する
- *
- * @param uint8_t       lx        左スティックのx軸
- * @param uint8_t       ly        左スティックのy軸
- * @param uint32_t      tilt_time スティックを傾ける時間の長さ
- * @param uint16_t      button    連打するボタン
- *
- * @see STICK_MIN       0
- * @see STICK_NEUTRAL 128
- * @see STICK_MAX     255
+ * @brief Switchのジョイスティックの倒し量を設定する
+ * 
+ * @param lx_per LスティックのX方向倒し量[％] -100~100の範囲で設定
+ * @param ly_per LスティックのY方向倒し量[％] -100~100の範囲で設定
+ * @param rx_per RスティックのX方向倒し量[％] -100~100の範囲で設定
+ * @param ry_per RスティックのY方向倒し量[％] -100~100の範囲で設定
+ * @param tilt_time_msec スティックを倒し続ける時間
  */
-void tiltLeftStick(uint8_t lx, uint8_t ly, uint32_t tilt_time, uint16_t button) {
-  moveLeftStick(lx, ly);
-  sendReport();
-  if (button) {
-    while (INPUT_TIME_TWICE <= tilt_time) {
-      pressButton(button);
-      sendReport();
-      delay(INPUT_TIME);
-      releaseButton(button);
-      sendReport();
-      delay(INPUT_TIME);
-      tilt_time -= INPUT_TIME_TWICE;
-    }
-  }
-  delay(tilt_time);
-  moveLeftStick(STICK_NEUTRAL, STICK_NEUTRAL);
-  sendReport();
-
-  delay(INPUT_TIME);
-}
-
-/**
- * 右スティックを指定の時間傾け続ける
- * 128を基準とし、0~255の値を指定する
- *
- * @param uint8_t       rx        右スティックのx軸
- * @param uint8_t       ry        右スティックのy軸
- * @param uint32_t      tilt_time スティックを傾ける時間の長さ
- * @param uint16_t      button    連打するボタン
- *
- * @see STICK_MIN       0
- * @see STICK_NEUTRAL 128
- * @see STICK_MAX     255
- */
-void tiltRightStick(uint8_t lx, uint8_t ly, uint32_t tilt_time, uint16_t button) {
-  moveRightStick(lx, ly);
-  sendReport();
-  if (button) {
-    while (INPUT_TIME_TWICE <= tilt_time) {
-      pressButton(button);
-      sendReport();
-      delay(INPUT_TIME);
-      releaseButton(button);
-      sendReport();
-      delay(INPUT_TIME);
-      tilt_time -= INPUT_TIME_TWICE;
-    }
-  }
-  delay(tilt_time);
-  moveRightStick(STICK_NEUTRAL, STICK_NEUTRAL);
-  sendReport();
-  delay(INPUT_TIME);
-}
-
-/**
- * 左スティックと右スティックを同時に指定の時間傾け続ける
- * 128を基準とし、0~255の値を指定する
- *
- * @param uint8_t       lx        左スティックのx軸
- * @param uint8_t       ly        左スティックのy軸
- * @param uint8_t       rx        右スティックのx軸
- * @param uint8_t       ry        右スティックのy軸
- * @param uint32_t      tilt_time スティックを傾ける時間の長さ
- * @param uint16_t      button    連打するボタン
- *
- * @see STICK_MIN       0
- * @see STICK_NEUTRAL 128
- * @see STICK_MAX     255
- */
-void tiltLeftAndRightStick(uint8_t lx, uint8_t ly, uint8_t rx, uint8_t ry, uint32_t tilt_time, uint16_t button) {
-  moveLeftStick(lx, ly);
-  moveRightStick(rx, ry);
-  sendReport();
-  if (button) {
-    while (INPUT_TIME_TWICE <= tilt_time) {
-      pressButton(button);
-      sendReport();
-      delay(INPUT_TIME);
-      releaseButton(button);
-      sendReport();
-      delay(INPUT_TIME);
-      tilt_time -= INPUT_TIME_TWICE;
-    }
-  }
-  delay(tilt_time);
-  moveLeftStick(STICK_NEUTRAL, STICK_NEUTRAL);
-  moveRightStick(STICK_NEUTRAL, STICK_NEUTRAL);
-  sendReport();
-  delay(INPUT_TIME);
+void tiltJoystick(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per, uint32_t tilt_time_msec) {
+  setStickTiltRatio(lx_per, ly_per, rx_per, ry_per);
+  delay(tilt_time_msec);
+  setStickTiltRatio(0, 0, 0, 0);
+  delay(BUTTON_PUSHING_MSEC);
 }
