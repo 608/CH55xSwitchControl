@@ -16,19 +16,19 @@
 ## 使い方
 ### 環境設定
 **ライブラリのインストール**  
-Arduinoのライブラリのあるディレクトリ(/Users/{username}/Documents/Arduino/libraries/ など)に、このレポジトリをcloneする/ダウンロードして展開する。
+Arduinoのライブラリのあるディレクトリ(/Users/{username}/Documents/Arduino/libraries/ など)に、このレポジトリをcloneする/ダウンロードして展開してください。
 
 
 **ch55xduinoのインストール**  
-Arduino IDEでCH552マイコンを使用する為に必要となる。
-1. ファイル→環境設定を開き、「追加のボードマネージャのURL」に以下のURLを追加する。
+Arduino IDEでCH552マイコンを使用する為に必要となります。
+1. ファイル→環境設定を開き、「追加のボードマネージャのURL」に以下のURLを追加してください。
 ~~~
 https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json
 ~~~
 
-2. ツール→ボード→ボードマネージャを開き、検索窓で「ch」と入力して出てくる「ch55xduino」を選んでインストールする。
+2. ツール→ボード→ボードマネージャを開き、検索窓で「ch」と入力して出てくる「ch55xduino」を選んでインストールします。
 
-3. ツール→ボードから、CH552を選択する。
+3. ツール→ボードから、CH552を選択します。
 
 
 **入力**  
@@ -44,16 +44,16 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 - ボタンを押すコマンド
 
-  - `pushButton(uint16_t button, uint32_t delay_time)`
+  - `pushButton(uint16_t button, uint32_t delay_time_msec)`
 
     - button: 押すボタン
-    - delay_time: ボタンを押した後の待ち時間（1 秒 = 1000）
+    - delay_time_msec: ボタンを押した後の待ち時間（1 秒 = 1000）
     
-  - `pushButtonLoop(uint16_t button, uint32_t delay_time, uint16_t loop_count)`
+  - `pushButtonLoop(uint16_t button, uint32_t delay_time_msec, uint16_t loop_num)`
 
     - button: 押すボタン
-    - delay_time: ボタンを押した後の待ち時間（1 秒 = 1000）
-    - loop_count: ボタンを押す回数
+    - delay_time_msec: ボタンを押した後の待ち時間（1 秒 = 1000）
+    - loop_num: ボタンを押す回数
 
   - 使用例
 
@@ -65,16 +65,16 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 - ボタンを長押しするコマンド
 
-  - `holdButton(uint16_t button, uint32_t hold_time)`
+  - `pushButtonContinuous(uint16_t button, uint32_t pushing_time_msec)`
 
     - button: 押し続けるボタン
-    - hold_time: ボタンを押す時間の長さ（1 秒 = 1000）
+    - pushing_time_msec: ボタンを押す時間の長さ（1 秒 = 1000）
 
   - 使用例
 
     ```
-    holdButton(BUTTON_L, 2000);       // Lボタンを2秒間押し続けてから離す
-    holdButton(BUTTON_CAPTURE, 1500); // キャプチャーボタンを1.5秒間押し続けてから離す
+    pushButtonContinuous(BUTTON_L, 2000);       // Lボタンを2秒間押し続けてから離す
+    pushButtonContinuous(BUTTON_CAPTURE, 1500); // キャプチャーボタンを1.5秒間押し続けてから離す
     ```
 
 - `BUTTON` 定義一覧
@@ -101,37 +101,37 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 - 十字キー（方向ボタン）を押すコマンド
 
-  - `pushHat(uint8_t hat, uint32_t delay_time);`
+  - `pushHatButton(uint8_t hat, uint32_t delay_time_msec);`
 
     - hat: 押す十字キーのボタン
-    - delay_time: ボタンを押した後の待ち時間（1 秒 = 1000）
+    - delay_time_msec: ボタンを押した後の待ち時間（1 秒 = 1000）
 
-  - `pushHatLoop(uint8_t hat, uint32_t delay_time, uint16_t loop_count);`
+  - `pushHatButtonLoop(uint8_t hat, uint32_t delay_time_msec, uint16_t loop_num);`
 
     - hat: 押す十字キーのボタン
-    - delay_time: ボタンを押した後の待ち時間（1 秒 = 1000）
-    - loop_count: ボタンを押す回数
+    - delay_time_msec: ボタンを押した後の待ち時間（1 秒 = 1000）
+    - loop_num: ボタンを押す回数
     
   - 使用例
 
     ```
-    pushHat(HAT_UP);          // 上キーを1回だけ入力する
-    pushHat(HAT_LEFT, 1000);  // 左キーを入力後、1秒待機する
-    pushHatLoop(HAT_DOWN, 25, 5); // 0.25秒おきに下キーを入力する、それを5回繰り返す
+    pushHatButton(HAT_UP);          // 上キーを1回だけ入力する
+    pushHatButton(HAT_LEFT, 1000);  // 左キーを入力後、1秒待機する
+    pushHatButtonLoop(HAT_DOWN, 25, 5); // 0.25秒おきに下キーを入力する、それを5回繰り返す
     ```
 
 - 十字キー（方向ボタン）を長押しするコマンド
 
-  - `holdHat(uint8_t hat, uint32_t hold_time);`
+  - `pushHatButtonContinuous(uint8_t hat, uint32_t pushing_time_msec);`
 
     - hat: 押し続ける十字キーのボタン
-    - hold_time: ボタンを押す時間の長さ（1 秒 = 1000）
+    - pushing_time_msec: ボタンを押す時間の長さ（1 秒 = 1000）
 
   - 使用例
 
     ```
-    holdHat(HAT_RIGHT, 5000);   // 右キーを5秒間押し続けてから離す
-    holdHat(HAT_UP_LEFT, 2500); // 十字キーを左上方向に2.5秒間押し続けてから離す
+    pushHatButtonContinuous(HAT_RIGHT, 5000);   // 右キーを5秒間押し続けてから離す
+    pushHatButtonContinuous(HAT_UP_LEFT, 2500); // 十字キーを左上方向に2.5秒間押し続けてから離す
     ```
 
 - `HAT` 定義一覧
@@ -145,75 +145,26 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
   HAT_DOWN_LEFT
   HAT_LEFT
   HAT_UP_LEFT
-  HAT_NEUTRAL
+  HAT_CENTER
   
 ### スティック
 
-スティックの座標は、128 を基点として 0〜255 の値を指定します。
+スティックの座標は、0 を基点として -100〜100 の値を指定します。
 
-0・128・255 の 3 つの値は定数定義されているため、置き換えて使用することもできます（0 = STICK_MIN, STICK_NEUTRAL = 128, STICK_MAX = 255）
+- スティックを操作するコマンド
 
-また、引数にボタンを渡すことでボタンを連打しながらスティックを傾ける操作を行うことができます。
+  - `tiltJoystick(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per, uint32_t tilt_time_msec);`
 
-- 左スティックを操作するコマンド
-
-  - `tiltLeftStick(uint8_t lx, uint8_t ly, uint32_t tilt_time, uint16_t button);`
-
-    - lx: 左スティックの x 軸
-    - ly: 左スティックの y 軸
-    - tilt_time: スティックを傾ける時間の長さ
-    - button: 連打するボタン
+    - lx_per: LスティックのX方向倒し量
+    - ly_per: LスティックのY方向倒し量
+    - rx_per: RスティックのX方向倒し量
+    - ry_per: RスティックのY方向倒し量
+    - tilt_time_msec: スティックを倒し続ける時間
 
   - 使用例
 
     ```
-    tiltLeftStick(0, 128, 5000, BUTTON_NONE);                                // 左スティックを左に5秒間倒す
-    tiltLeftStick(STICK_NEUTRAL, STICK_MAX, 15000, BUTTON_NONE);           // 左スティックを下に15秒間倒す
-    tiltLeftStick(STICK_NEUTRAL, STICK_MIN, 8000, BUTTON_A); // Aボタンを連打しながら、左スティックを上に8秒間倒す
+    tiltJoystick(-100, 0, 0, 0, 5000);           // Lスティックを左に5秒間倒す
+    tiltJoystick(0, 100, 0, 0, 15000);           // Lスティックを下に15秒間倒す
+    tiltJoystick(0, 0, 100, 100, 10000);         // Rスティックを右下に10秒間倒す
     ```
-
-- 右スティックを操作するコマンド
-
-  - `tiltRightStick(uint8_t rx, uint8_t ry, uint32_t tilt_time, uint16_t button);`
-
-    - rx: 右スティックの x 軸
-    - ry: 右スティックの y 軸
-    - tilt_time: スティックを傾ける時間の長さ
-    - button: 連打するボタン
-
-  - 使用例
-
-    ```
-    tiltRightStick(255, 128, 100, BUTTON_NONE);                                 // 右スティックを右に0.1秒間倒す
-    tiltRightStick(STICK_MAX, STICK_MIN, 10000, BUTTON_NONE);                 // 右スティックを右上に10秒間倒す
-    tiltRightStick(STICK_NEUTRAL, STICK_MAX, 30000, BUTTON_X);  // Xボタンを連打しながら、右スティックを下に30秒間倒す
-    ```
-
-- 左右のスティックを同時に操作するコマンド
-
-  - `tiltLeftAndRightStick(uint8_t lx, uint8_t ly, uint8_t rx, uint8_t ry, uint32_t tilt_time, uint16_t button);`
-
-    - lx: 左スティックの x 軸
-    - ly: 左スティックの y 軸
-    - rx: 右スティックの x 軸
-    - ry: 右スティックの y 軸
-    - tilt_time: スティックを傾ける時間の長さ
-    - button: 連打するボタン
-
-  - 使用例
-
-    ```
-    tiltLeftAndRightStick(128, 255, 0, 128, 1000, BUTTON_NONE);                                                // 左スティックを下に、右スティックを左に1秒間倒す
-    tiltLeftAndRightStick(STICK_MAX, STICK_MAX, STICK_MIN, STICK_MIN, 30000, BUTTON_NONE);                 // 左スティックを右下に、右スティックは左上に、30秒間倒す
-    tiltLeftAndRightStick(STICK_NEUTRAL, STICK_MAX, STICK_MIN, STICK_MAX, 2000, BUTTON_B);   // Bボタンを連打しながら、左スティックを下に、右スティックは左下に、2秒間倒す
-    ```
-
-- `STICK` 定義一覧
-
-  ```
-  STICK_MIN
-  STICK_NEUTRAL
-  STICK_MAX
-
-## 参考
-[NintendoSwitchControlLibrary](https://github.com/lefmarna/NintendoSwitchControlLibrary)
