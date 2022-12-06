@@ -30,6 +30,8 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
 
 3. ツール→ボードから、CH552を選択します。
 
+4. ツール→USB Settingsから、「USER CODE w/ 148B USB ram」を選択します。
+
 
 **入力**  
 ライブラリを使いたいファイルの先頭に以下のように記載してください。
