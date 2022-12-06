@@ -15,6 +15,11 @@
 
 ## 使い方
 ### 環境設定
+**WCHISPToolのインストール**  
+下記URLよりインストーラをダウンロードし、WCHISPToolをインストールします。  
+インストール後、WCHISPToolを起動するとCH552のドライバがインストールされます。
+https://cdn.discordapp.com/attachments/671698808140464158/1044979116572680262/WCHISPTool_Setup.exe
+
 **ライブラリのインストール**  
 Arduino IDEのライブラリマネージャーの検索窓で本ライブラリ名「CH55xSwitchControl」を検索し、インストールします。
 
