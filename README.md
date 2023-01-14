@@ -151,7 +151,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
     pushHatButtonContinuous(HAT_UP_LEFT, 2500); // 十字キーを左上方向に2.5秒間押し続けてから離す
     ```
 
-- 十字キーの入力状態を直接制御するコマンド（上級者向け）
+- 十字キー（方向ボタン）の入力状態を直接制御するコマンド（上級者向け）
 
   - `pressHatButton(uint8_t hat)`
 
@@ -196,3 +196,12 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
     tiltJoystick(0, 100, 0, 0, 15000);           // Lスティックを下に15秒間倒す
     tiltJoystick(0, 0, 100, 100, 10000);         // Rスティックを右下に10秒間倒す
     ```
+
+- スティックの入力状態を直接制御するコマンド（上級者向け）
+
+  - `setStickTiltRatio(uint8_t lx_per, uint8_t ly_per, uint8_t rx_per, uint8_t ry_per)`
+
+    - lx_per: LスティックのX方向倒し量
+    - ly_per: LスティックのY方向倒し量
+    - rx_per: RスティックのX方向倒し量
+    - ry_per: RスティックのY方向倒し量
