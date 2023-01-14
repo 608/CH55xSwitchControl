@@ -84,7 +84,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
     pushButtonContinuous(BUTTON_CAPTURE, 1500); // キャプチャーボタンを1.5秒間押し続けてから離す
     ```
 
-- ボタンの入力状態を直接制御するコマンド(上級者向け)
+- ボタンの入力状態を直接制御するコマンド（上級者向け）
 
   - `pressButton(uint16_t button)`
 
@@ -151,7 +151,7 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
     pushHatButtonContinuous(HAT_UP_LEFT, 2500); // 十字キーを左上方向に2.5秒間押し続けてから離す
     ```
 
-- 十字キーの入力状態を直接制御するコマンド(上級者向け)
+- 十字キーの入力状態を直接制御するコマンド（上級者向け）
 
   - `pressHatButton(uint8_t hat)`
 
