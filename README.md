@@ -65,7 +65,6 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
   - 使用例
 
     ```
-    pushButton(BUTTON_HOME);        // HOMEボタンを入力する
     pushButton(BUTTON_A, 500);      // Aボタンを入力後、0.5秒待機する
     pushButtonLoop(BUTTON_B, 3000, 10); // 3秒おきにBボタンを入力する、それを10回繰り返す
     ```
