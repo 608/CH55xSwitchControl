@@ -131,7 +131,6 @@ https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xd
   - 使用例
 
     ```
-    pushHatButton(HAT_UP);          // 上キーを1回だけ入力する
     pushHatButton(HAT_LEFT, 1000);  // 左キーを入力後、1秒待機する
     pushHatButtonLoop(HAT_DOWN, 25, 5); // 0.25秒おきに下キーを入力する、それを5回繰り返す
     ```
